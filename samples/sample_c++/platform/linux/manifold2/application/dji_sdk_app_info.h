@@ -37,8 +37,8 @@ extern "C" {
 // information then fill in the application information here.
 #define USER_APP_NAME               "iCrest"
 #define USER_APP_ID                 "152111"
-#define USER_APP_KEY                "2f3a7ab078ef6a17e47500f82565cb0"
-#define USER_APP_LICENSE            "p2NzMGf4HGrfvMklQi1kEiMoxWeFuQ6wLgSmTtOvevTcIiZQ+4iTuAE2UBxjm5mZR8t2RuHiBluVzmW8AIIguJl8R1jzCDHOxfKyFiXTjMLpuHNmykNNU7O2DbC+ON10mws10H51t52IP/R+CrDbOVROcpv2FenTNZRaiq/HoqNfxU2Nz96KSvttf8wZ3NvCx6X74P91dDr0qRBkafnxfZJM0jdCQg0jY/d2lt2TJZaPJkizExL9Tv+q1jMlyHNZyga+eQg1atb0oHLLfx6bsGnC/0igMD17YM/Eh8K48j7JS3q53Ng67MRAnhZRrUM4a6LfmwClGsH1fG0mp7H9OQ=="
+#define USER_APP_KEY                ""
+#define USER_APP_LICENSE            ""
 #define USER_DEVELOPER_ACCOUNT      "qinqiaomeng@gmail.com"
 #define USER_BAUD_RATE              "1000000"
 
