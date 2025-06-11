@@ -78,7 +78,7 @@ bool DJICameraStreamDecoder::init()
     }
 
 #ifdef FFMPEG_INSTALLED
-    avcodec_register_all();
+    // avcodec_register_all();
     pCodecCtx = avcodec_alloc_context3(nullptr);
     if (!pCodecCtx) {
         return false;
