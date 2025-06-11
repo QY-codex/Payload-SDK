@@ -71,12 +71,6 @@ typedef enum {
     DJI_LIVEVIEW_CAMERA_SOURCE_M3D_VIS = 1,
     DJI_LIVEVIEW_CAMERA_SOURCE_M3TD_VIS = 1,
     DJI_LIVEVIEW_CAMERA_SOURCE_M3TD_IR = 2,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4E_VIS = 1,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4T_VIS = 1,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4T_IR = 2,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4D_VIS = 1,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4TD_VIS = 1,
-    DJI_LIVEVIEW_CAMERA_SOURCE_M4TD_IR = 2,
 } E_DjiLiveViewCameraSource;
 
 /**
@@ -87,7 +81,7 @@ typedef void (*DjiLiveview_H264Callback)(E_DjiLiveViewCameraPosition position, c
 /* Exported functions --------------------------------------------------------*/
 /**
  * @brief Initialize the liveview module.
- * @note Must be called after DjiCore_Init.
+ * @note The interface initialization needs to be after DjiCore_Init.
  * @return Execution result.
  */
 T_DjiReturnCode DjiLiveview_Init(void);
@@ -99,27 +93,27 @@ T_DjiReturnCode DjiLiveview_Init(void);
 T_DjiReturnCode DjiLiveview_Deinit(void);
 
 /**
- * @brief Start the FPV or camera H264 stream from the specified position.
- * @param position: Camera position for the H264 stream output.
- * @param source: sub-camera source for the H264 stream output.
- * @param callback: Callback function in a callback thread when a new h264 frame is received
+ * @brief Start the FPV or Camera H264 Stream by selected position.
+ * @param position: point out which camera to output the H264 stream
+ * @param source: point out which sub camera to output the H264 stream
+ * @param callback: callback function that is called in a callback thread when a new h264 frame is received
  * @return Execution result.
  */
 T_DjiReturnCode DjiLiveview_StartH264Stream(E_DjiLiveViewCameraPosition position, E_DjiLiveViewCameraSource source,
                                             DjiLiveview_H264Callback callback);
 
 /**
- * @brief Stop the FPV or Camera H264 Stream from the specified position.
- * @param position: Camera position for the H264 stream output.
- * @param source: sub-camera source for the H264 stream output.
+ * @brief Stop the FPV or Camera H264 Stream by selected position.
+ * @param position: point out which camera to output the H264 stream
+ * @param source: point out which sub camera to output the H264 stream
  * @return Execution result.
  */
 T_DjiReturnCode DjiLiveview_StopH264Stream(E_DjiLiveViewCameraPosition position, E_DjiLiveViewCameraSource source);
 
 /**
- * @brief Request the intraframe Frame of camera H264 stream from the specified position.
- * @param position: Camera position for the H264 stream output.
- * @param source: sub-camera source for the H264 stream output.
+ * @brief Request the intraframe Frame of Camera H264 Stream by selected position.
+ * @param position: point out which camera to output the H264 stream
+ * @param source: point out which sub camera to output the H264 stream
  * @return Execution result.
  */
 T_DjiReturnCode DjiLiveview_RequestIntraframeFrameData(E_DjiLiveViewCameraPosition position,

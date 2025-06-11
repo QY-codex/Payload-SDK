@@ -321,13 +321,10 @@ static T_DjiReturnCode DjiTest_PlayTtsData(void)
         return DJI_ERROR_SYSTEM_MODULE_CODE_SYSTEM_ERROR;
     }
 
-    if (DJI_AIRCRAFT_TYPE_M3E == aircraftInfoBaseInfo.aircraftType || DJI_AIRCRAFT_TYPE_M3T == aircraftInfoBaseInfo.aircraftType
-        || DJI_AIRCRAFT_TYPE_M3D == aircraftInfoBaseInfo.aircraftType || DJI_AIRCRAFT_TYPE_M3TD == aircraftInfoBaseInfo.aircraftType
-        || DJI_AIRCRAFT_TYPE_M4T == aircraftInfoBaseInfo.aircraftType
-        || DJI_AIRCRAFT_TYPE_M4E == aircraftInfoBaseInfo.aircraftType
-        || DJI_AIRCRAFT_TYPE_M4TD == aircraftInfoBaseInfo.aircraftType
-        || DJI_AIRCRAFT_TYPE_M4D == aircraftInfoBaseInfo.aircraftType
-    ) {
+    if (aircraftInfoBaseInfo.aircraftType == DJI_AIRCRAFT_TYPE_M3E ||
+        aircraftInfoBaseInfo.aircraftType == DJI_AIRCRAFT_TYPE_M3T ||
+        aircraftInfoBaseInfo.aircraftType == DJI_AIRCRAFT_TYPE_M3D ||
+        aircraftInfoBaseInfo.aircraftType == DJI_AIRCRAFT_TYPE_M3TD) {
         return DjiTest_PlayAudioData();
     } else {
         txtFile = fopen(WIDGET_SPEAKER_TTS_FILE_NAME, "r");

@@ -39,7 +39,7 @@
 
 #define TEST_CAMERA_MAX_INFRARED_ZOOM_FACTOR          8
 #define TEST_CAMERA_MIN_INFRARED_ZOOM_FACTOR          2
-#define TEST_CAMERA_MOP_CHANNEL_SUBSCRIBE_POINT_CLOUD_CHANNEL_ID         49154
+#define TEST_CAMERA_MOP_CHANNEL_SUBSCRIBE_POINT_CLOUD_CHANNEL_ID         49152
 #define TEST_CAMERA_MOP_CHANNEL_SUBSCRIBE_POINT_CLOUD_RECV_BUFFER        (512 * 1024)
 #define TEST_CAMERA_MOP_CHANNEL_COLOR_POINTS_BUFFER                      (512 * 1024)
 #define TEST_CAMERA_MOP_CHANNEL_WAIT_TIME_MS                             (3 * 1000)
@@ -72,12 +72,6 @@ static const T_DjiTestCameraTypeStr s_cameraTypeStrList[] = {
     {DJI_CAMERA_TYPE_M3T,     "M3T Camera"},
     {DJI_CAMERA_TYPE_M3D,     "M3D Camera"},
     {DJI_CAMERA_TYPE_M3TD,    "M3TD Camera"},
-    {DJI_CAMERA_TYPE_H30,     "H30 Camera"},
-    {DJI_CAMERA_TYPE_H30T,    "H30T Camera"},
-    {DJI_CAMERA_TYPE_M4T,     "M4T Camera"},
-    {DJI_CAMERA_TYPE_M4E,     "M4E Camera"},
-    {DJI_CAMERA_TYPE_M4TD,    "M4TD Camera"},
-    {DJI_CAMERA_TYPE_M4D,     "M4D Camera"},
 };
 
 static FILE *s_downloadMediaFile = NULL;
@@ -850,15 +844,11 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
         case E_DJI_TEST_CAMERA_MANAGER_SAMPLE_SELECT_SET_CAMERA_SHUTTER_SPEED: {
             USER_LOG_INFO("--> Function a: Set camera shutter speed to 1/100 s");
             DjiTest_WidgetLogAppend("--> Function a: Set camera shutter speed to 1/100 s");
-            if (DJI_CAMERA_TYPE_H20 == cameraType || DJI_CAMERA_TYPE_H20T == cameraType
-                || DJI_CAMERA_TYPE_H20N == cameraType
-                || DJI_CAMERA_TYPE_M30 == cameraType || DJI_CAMERA_TYPE_M30T == cameraType
-                || DJI_CAMERA_TYPE_M3E == cameraType || DJI_CAMERA_TYPE_M3T == cameraType
-                || DJI_CAMERA_TYPE_M3D == cameraType || DJI_CAMERA_TYPE_M3TD == cameraType
-                || DJI_CAMERA_TYPE_M4T == cameraType || DJI_CAMERA_TYPE_M4E == cameraType
-                || DJI_CAMERA_TYPE_H30 == cameraType || DJI_CAMERA_TYPE_H30T == cameraType
-				|| DJI_CAMERA_TYPE_M4TD == cameraType || DJI_CAMERA_TYPE_M4D == cameraType
-                ) {
+            if (cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_H20T ||
+                cameraType == DJI_CAMERA_TYPE_H20N || cameraType == DJI_CAMERA_TYPE_M30 ||
+                cameraType == DJI_CAMERA_TYPE_M30T || cameraType == DJI_CAMERA_TYPE_M3E ||
+                cameraType == DJI_CAMERA_TYPE_M3T || cameraType == DJI_CAMERA_TYPE_M3D ||
+                cameraType == DJI_CAMERA_TYPE_M3TD) {
                 USER_LOG_INFO("Set mounted position %d camera's exposure mode to manual mode.",
                               mountPosition);
                 returnCode = DjiTest_CameraManagerSetExposureMode(mountPosition,
@@ -894,15 +884,11 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
         case E_DJI_TEST_CAMERA_MANAGER_SAMPLE_SELECT_SET_CAMERA_APERTURE: {
             USER_LOG_INFO("--> Function b: Set camera aperture to 400(F/4)");
             DjiTest_WidgetLogAppend("--> Function b: Set camera aperture to 400(F/4)");
-            if (DJI_CAMERA_TYPE_H20 == cameraType || DJI_CAMERA_TYPE_H20T == cameraType
-                || DJI_CAMERA_TYPE_H20N == cameraType
-                || DJI_CAMERA_TYPE_M30 == cameraType || DJI_CAMERA_TYPE_M30T == cameraType
-                || DJI_CAMERA_TYPE_M3E == cameraType || DJI_CAMERA_TYPE_M3T == cameraType
-                || DJI_CAMERA_TYPE_M3D == cameraType || DJI_CAMERA_TYPE_M3TD == cameraType
-                || DJI_CAMERA_TYPE_M4T == cameraType || DJI_CAMERA_TYPE_M4E == cameraType
-                || DJI_CAMERA_TYPE_H30 == cameraType || DJI_CAMERA_TYPE_H30T == cameraType
-				|| DJI_CAMERA_TYPE_M4TD == cameraType || DJI_CAMERA_TYPE_M4D == cameraType
-            ) {
+            if (cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_H20N
+                || cameraType == DJI_CAMERA_TYPE_H20T || cameraType == DJI_CAMERA_TYPE_M30
+                || cameraType == DJI_CAMERA_TYPE_M30T || cameraType == DJI_CAMERA_TYPE_M3E
+                || cameraType == DJI_CAMERA_TYPE_M3T || cameraType == DJI_CAMERA_TYPE_M3D
+                || cameraType == DJI_CAMERA_TYPE_M3TD) {
                 USER_LOG_INFO("Set mounted position %d camera's exposure mode to manual mode.",
                               mountPosition);
                 returnCode = DjiTest_CameraManagerSetExposureMode(mountPosition,
@@ -1195,15 +1181,11 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
             E_DjiCameraManagerNightSceneMode nightSceneMode;
             T_DjiCameraManagerRangeList nightSceneModeRange;
 
-            if (DJI_CAMERA_TYPE_XT2 == cameraType || DJI_CAMERA_TYPE_XTS == cameraType
-                || DJI_CAMERA_TYPE_H20 == cameraType
-                || DJI_CAMERA_TYPE_P1 == cameraType
-                || DJI_CAMERA_TYPE_L1 == cameraType || DJI_CAMERA_TYPE_L2 == cameraType
-                || DJI_CAMERA_TYPE_M3E == cameraType || DJI_CAMERA_TYPE_M3T == cameraType
-                || DJI_CAMERA_TYPE_M3D == cameraType || DJI_CAMERA_TYPE_M3TD == cameraType
-                || DJI_CAMERA_TYPE_M4T == cameraType || DJI_CAMERA_TYPE_M4E == cameraType
-				|| DJI_CAMERA_TYPE_M4TD == cameraType || DJI_CAMERA_TYPE_M4D == cameraType
-            ) {
+            if (cameraType == DJI_CAMERA_TYPE_XT2 || cameraType == DJI_CAMERA_TYPE_XTS ||
+                cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_P1 ||
+                cameraType == DJI_CAMERA_TYPE_L1 || cameraType == DJI_CAMERA_TYPE_L2 ||
+                cameraType == DJI_CAMERA_TYPE_M3E || cameraType == DJI_CAMERA_TYPE_M3T ||
+                cameraType == DJI_CAMERA_TYPE_M3D || cameraType == DJI_CAMERA_TYPE_M3TD) {
                 USER_LOG_INFO("Camera type %s does not support night scene mode!",
                               s_cameraTypeStrList[DjiTest_CameraManagerGetCameraTypeIndex(cameraType)].cameraTypeStr);
                 goto exitCameraModule;
@@ -1474,7 +1456,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
             osalHandler->TaskSleepMs(5);
             printf("Input expand directory name: ");
             scanf("%s", dirName);
-            dirNameSize = strlen((const char *)dirName);
+            dirNameSize = strlen(dirName);
 
             returnCode = DjiCameraManager_SetCustomExpandName(mountPosition,
                                                               DJI_CAMERA_MANAGER_EXPAND_NAME_TYPE_DIR,
@@ -1489,7 +1471,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
                 osalHandler->TaskSleepMs(5);
                 printf("Input expand file name: ");
                 scanf("%s", fileName);
-                fileNameSize = strlen((const char *)fileName);
+                fileNameSize = strlen(fileName);
 
                 returnCode = DjiCameraManager_SetCustomExpandName(mountPosition,
                                                                 DJI_CAMERA_MANAGER_EXPAND_NAME_TYPE_FILE,
@@ -1547,8 +1529,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
             if (cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_H20T ||
                 cameraType == DJI_CAMERA_TYPE_H20N || cameraType == DJI_CAMERA_TYPE_M30 ||
                 cameraType == DJI_CAMERA_TYPE_M30T || cameraType == DJI_CAMERA_TYPE_M3E ||
-                cameraType == DJI_CAMERA_TYPE_M3T || cameraType == DJI_CAMERA_TYPE_H30 ||
-                cameraType == DJI_CAMERA_TYPE_H30T) {
+                cameraType == DJI_CAMERA_TYPE_M3T) {
                 returnCode = DjiCameraManager_SetStreamSource(mountPosition, DJI_CAMERA_MANAGER_SOURCE_ZOOM_CAM);
                 if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
                     USER_LOG_WARN("Change camera stream source to zoom camera failed at position %d, error code: 0x%08X\r\n",
@@ -1608,8 +1589,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
             if (cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_H20N ||
                 cameraType == DJI_CAMERA_TYPE_H20T || cameraType == DJI_CAMERA_TYPE_M30 ||
                 cameraType == DJI_CAMERA_TYPE_M30T || cameraType == DJI_CAMERA_TYPE_M3E ||
-                cameraType == DJI_CAMERA_TYPE_M3T || cameraType == DJI_CAMERA_TYPE_H30 ||
-                cameraType == DJI_CAMERA_TYPE_H30T) {
+                cameraType == DJI_CAMERA_TYPE_M3T) {
                 USER_LOG_INFO("Set camera stream source to zoom camera.");
                 returnCode = DjiCameraManager_SetStreamSource(mountPosition, DJI_CAMERA_MANAGER_SOURCE_ZOOM_CAM);
                 if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
@@ -1937,8 +1917,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
                 cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_P1 ||
                 cameraType == DJI_CAMERA_TYPE_L1 || cameraType == DJI_CAMERA_TYPE_M30 ||
                 cameraType == DJI_CAMERA_TYPE_M3E || cameraType == DJI_CAMERA_TYPE_M3D ||
-                cameraType == DJI_CAMERA_TYPE_L2 || cameraType == DJI_CAMERA_TYPE_H30 ||
-                cameraType == DJI_CAMERA_TYPE_M4T || cameraType == DJI_CAMERA_TYPE_M4TD) {
+                cameraType == DJI_CAMERA_TYPE_L2) {
                 USER_LOG_WARN("Camera type %s don't support FFC function.",
                               s_cameraTypeStrList[DjiTest_CameraManagerGetCameraTypeIndex(cameraType)].cameraTypeStr);
                 goto exitCameraModule;
@@ -1984,8 +1963,7 @@ T_DjiReturnCode DjiTest_CameraManagerRunSample(E_DjiMountPosition mountPosition,
                 cameraType == DJI_CAMERA_TYPE_H20 || cameraType == DJI_CAMERA_TYPE_P1 ||
                 cameraType == DJI_CAMERA_TYPE_L1 || cameraType == DJI_CAMERA_TYPE_M30 ||
                 cameraType == DJI_CAMERA_TYPE_M3E || cameraType == DJI_CAMERA_TYPE_M3D ||
-                cameraType == DJI_CAMERA_TYPE_L2 || cameraType == DJI_CAMERA_TYPE_H30 ||
-                cameraType == DJI_CAMERA_TYPE_M4T || cameraType == DJI_CAMERA_TYPE_M4TD) {
+                cameraType == DJI_CAMERA_TYPE_L2) {
                 USER_LOG_WARN("Camera type %s don't support infrared function.",
                               s_cameraTypeStrList[DjiTest_CameraManagerGetCameraTypeIndex(cameraType)].cameraTypeStr);
                 goto exitCameraModule;
@@ -2321,7 +2299,7 @@ static T_DjiReturnCode DjiTest_CameraManagerDownloadFileDataCallback(T_DjiDownlo
 {
     int32_t i =0, j = 0;
     float downloadSpeed = 0.0f;
-    int32_t mediaFileIndex = 0, mediaSubFileIndex = -1;
+    uint32_t mediaFileIndex = 0, mediaSubFileIndex = -1;
     T_DjiOsalHandler *osalHandler = DjiPlatform_GetOsalHandler();
 
     if (packetInfo.downloadFileEvent == DJI_DOWNLOAD_FILE_EVENT_START) {
@@ -2431,7 +2409,7 @@ static T_DjiReturnCode DjiTest_CameraManagerDownloadFileDataCallback(T_DjiDownlo
                packetInfo.progressInPercent, downloadFileName, packetInfo.fileSize, packetInfo.fileIndex);
         printf("\033[1A");
 
-        downloadSpeed = (float) packetInfo.fileSize / 1.0F;
+        downloadSpeed = (float) packetInfo.fileSize / 1.0;
         printf("\033[1;32;40m ### [Complete rate : %0.1f%%] (%s), size: %u, mediaFileIndex: %d\033[0m\r\n",
                packetInfo.progressInPercent, downloadFileName, packetInfo.fileSize, packetInfo.fileIndex);
         printf("\033[1A");

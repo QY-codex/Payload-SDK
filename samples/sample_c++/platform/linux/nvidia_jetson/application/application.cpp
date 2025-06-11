@@ -35,9 +35,9 @@
 #include "../common/osal/osal.h"
 #include "../common/osal/osal_fs.h"
 #include "../common/osal/osal_socket.h"
-#include "../hal/hal_usb_bulk.h"
-#include "../hal/hal_uart.h"
-#include "../hal/hal_network.h"
+#include "../manifold2/hal/hal_usb_bulk.h"
+#include "../manifold2/hal/hal_uart.h"
+#include "../manifold2/hal/hal_network.h"
 
 /* Private constants ---------------------------------------------------------*/
 #define DJI_LOG_PATH                    "Logs/DJI"
@@ -158,33 +158,31 @@ void Application::DjiUser_SetupEnvironment()
         throw std::runtime_error("Register osal handler error.");
     }
 
-#if (CONFIG_HARDWARE_CONNECTION == DJI_USE_UART_AND_USB_BULK_DEVICE)
     returnCode = DjiPlatform_RegHalUartHandler(&uartHandler);
     if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
         throw std::runtime_error("Register hal uart handler error.");
     }
 
+#if (CONFIG_HARDWARE_CONNECTION == DJI_USE_UART_AND_USB_BULK_DEVICE)
     returnCode = DjiPlatform_RegHalUsbBulkHandler(&usbBulkHandler);
     if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
         throw std::runtime_error("Register hal usb bulk handler error.");
     }
 #elif (CONFIG_HARDWARE_CONNECTION == DJI_USE_UART_AND_NETWORK_DEVICE)
-    returnCode = DjiPlatform_RegHalUartHandler(&uartHandler);
-    if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
-        throw std::runtime_error("Register hal network handler error");
-    }
-
     returnCode = DjiPlatform_RegHalNetworkHandler(&networkHandler);
     if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
         throw std::runtime_error("Register hal network handler error");
     }
 #elif (CONFIG_HARDWARE_CONNECTION == DJI_USE_ONLY_UART)
-    returnCode = DjiPlatform_RegHalUartHandler(&uartHandler);
-    if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
-        throw std::runtime_error("Register hal network handler error");
-    }
-
+    /*!< Attention: Only use uart hardware connection.
+     */
 #endif
+
+    //Attention: if you want to use camera stream view function, please uncomment it.
+    returnCode = DjiPlatform_RegSocketHandler(&socketHandler);
+    if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
+        throw std::runtime_error("register osal socket handler error");
+    }
 
     returnCode = DjiPlatform_RegFileSystemHandler(&fileSystemHandler);
     if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
@@ -237,7 +235,7 @@ void Application::DjiUser_ApplicationStart()
     }
 
     if (aircraftInfoBaseInfo.mountPosition != DJI_MOUNT_POSITION_EXTENSION_PORT) {
-        throw std::runtime_error("Please run this sample on extension port.");
+        //throw std::runtime_error("Please run this sample on extension port.");
     }
 
     returnCode = DjiCore_SetAlias("PSDK_APPALIAS");

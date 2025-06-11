@@ -30,6 +30,7 @@
 #define HAL_H
 
 /* Includes ------------------------------------------------------------------*/
+//#include "dji_platform.h"
 #include "stdint.h"
 #include "dji_platform.h"
 

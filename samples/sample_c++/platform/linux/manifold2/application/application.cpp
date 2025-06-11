@@ -265,6 +265,13 @@ void Application::DjiUser_ApplicationStart()
     }
 #endif
 
+    std::cout << "userInfo: " << userInfo.appName << std::endl;
+    std::cout << "userInfo: " << userInfo.appId << std::endl;
+    std::cout << "userInfo: " << userInfo.appKey << std::endl;
+    std::cout << "userInfo: " << userInfo.appLicense << std::endl;
+    std::cout << "userInfo: " << userInfo.developerAccount << std::endl;
+    std::cout << "userInfo: " << userInfo.baudRate << std::endl;
+
     returnCode = DjiCore_Init(&userInfo);
     if (returnCode != DJI_ERROR_SYSTEM_MODULE_CODE_SUCCESS) {
         sleep(1);
@@ -278,7 +285,7 @@ void Application::DjiUser_ApplicationStart()
 
     if (aircraftInfoBaseInfo.mountPosition != DJI_MOUNT_POSITION_EXTENSION_PORT
         && DJI_MOUNT_POSITION_EXTENSION_LITE_PORT != aircraftInfoBaseInfo.mountPosition) {
-        throw std::runtime_error("Please run this sample on extension port.");
+        //throw std::runtime_error("Please run this sample on extension port.");
     }
 
     returnCode = DjiCore_SetAlias("PSDK_APPALIAS");

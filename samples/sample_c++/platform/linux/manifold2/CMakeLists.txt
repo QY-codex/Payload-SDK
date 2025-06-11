@@ -46,7 +46,7 @@ if (DEVICE_SYSTEM_ID MATCHES x86_64)
     add_definitions(-DPLATFORM_ARCH_x86_64=1)
 elseif (DEVICE_SYSTEM_ID MATCHES aarch64)
     set(TOOLCHAIN_NAME aarch64-linux-gnu-gcc)
-    add_definitions(-DPLATFORM_ARCH_AARCH64=1)
+    add_definitions(-DPLATFORM_ARCH_aarch64=1)
 else ()
     message(FATAL_ERROR "FATAL: Please confirm your platform.")
 endif ()
@@ -85,9 +85,10 @@ if (FFMPEG_FOUND)
             OUTPUT_VARIABLE ffmpeg_version_output
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
-    string(REGEX MATCH "version.*Copyright" ffmpeg_version_line ${ffmpeg_version_output})
-    string(REGEX MATCH " .* " ffmpeg_version ${ffmpeg_version_line})
-    string(REGEX MATCH "^ 5.*$" ffmpeg_major_version ${ffmpeg_version})
+
+string(REGEX MATCH "version.*Copyright" ffmpeg_version_line "${ffmpeg_version_output}")
+string(REGEX MATCH " .* " ffmpeg_version "${ffmpeg_version_line}")
+string(REGEX MATCH "^ 5.*$" ffmpeg_major_version "${ffmpeg_version}")
 
     if (HEAD${ffmpeg_major_version} STREQUAL "HEAD")
         message(STATUS " - Version: ${ffmpeg_version}")
@@ -133,8 +134,11 @@ endif ()
 
 target_link_libraries(${PROJECT_NAME} m)
 
+add_custom_command(TARGET ${PROJECT_NAME}
+        PRE_LINK COMMAND cmake ..
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
 target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
 if (OpenCV_FOUND)
     target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 endif ()
-

@@ -22,11 +22,8 @@ include_directories(../nvidia_jetson/application)
 file(GLOB_RECURSE MODULE_SAMPLE_SRC
         ../../../module_sample/liveview/*.c*
         ../../../module_sample/camera_manager/*.c*
-        ../../../module_sample/hms_manager/*.c*
         ../../../module_sample/perception/*.c*
         ../../../module_sample/gimbal/*.c*
-        ../../../module_sample/flight_controller/*.c*
-        ../../../module_sample/hms_manager/*.c*
         ../../../../sample_c/module_sample/*.c
         )
 file(GLOB_RECURSE MODULE_COMMON_SRC ../common/*.c*)
@@ -34,7 +31,7 @@ file(GLOB_RECURSE MODULE_HAL_SRC hal/*.c*)
 file(GLOB_RECURSE MODULE_APP_SRC application/*.c*)
 
 set(TOOLCHAIN_NAME aarch64-linux-gnu-gcc)
-add_definitions(-DPLATFORM_ARCH_AARCH64=1)
+add_definitions(-DPLATFORM_ARCH_aarch64=1)
 add_definitions(-DSYSTEM_ARCH_LINUX=1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../common/3rdparty)
@@ -56,9 +53,7 @@ if (OpenCV_FOUND)
     message(STATUS "Found OpenCV installed in the system, will use it to display image in AdvancedSensing APIs")
     message(STATUS " - Includes: ${OpenCV_INCLUDE_DIRS}")
     message(STATUS " - Libraries: ${OpenCV_LIBRARIES}")
-    # add_definitions(-DOPEN_CV_INSTALLED)
-    # target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
-    # target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+    add_definitions(-DOPEN_CV_INSTALLED)
 else ()
     message(STATUS "Did not find OpenCV in the system, image data is inside RecvContainer as raw data")
 endif ()
@@ -83,9 +78,9 @@ if (FFMPEG_FOUND)
         message(FATAL_ERROR " - Not support FFMPEG version: ${ffmpeg_major_version}, please install 4.x.x instead.")
     endif ()
 
-    # target_link_libraries(${PROJECT_NAME} ${FFMPEG_LIBRARIES})
-    # include_directories(${FFMPEG_INCLUDE_DIR})
-    # add_definitions(-DFFMPEG_INSTALLED)
+    target_link_libraries(${PROJECT_NAME} ${FFMPEG_LIBRARIES})
+    include_directories(${FFMPEG_INCLUDE_DIR})
+    add_definitions(-DFFMPEG_INSTALLED)
 else ()
     message(STATUS "Cannot Find FFMPEG")
 endif (FFMPEG_FOUND)
@@ -99,8 +94,8 @@ if (OPUS_FOUND)
     message(STATUS " - Includes: ${OPUS_INCLUDE_DIR}")
     message(STATUS " - Libraries: ${OPUS_LIBRARY}")
 
-    # add_definitions(-DOPUS_INSTALLED)
-    # target_link_libraries(${PROJECT_NAME} /usr/local/lib/libopus.a)
+    add_definitions(-DOPUS_INSTALLED)
+    target_link_libraries(${PROJECT_NAME} /usr/local/lib/libopus.a)
 else ()
     message(STATUS "Cannot Find OPUS")
 endif (OPUS_FOUND)
@@ -111,8 +106,8 @@ if (LIBUSB_FOUND)
     message(STATUS " - Includes: ${LIBUSB_INCLUDE_DIR}")
     message(STATUS " - Libraries: ${LIBUSB_LIBRARY}")
 
-    # add_definitions(-DLIBUSB_INSTALLED)
-    # target_link_libraries(${PROJECT_NAME} usb-1.0)
+    add_definitions(-DLIBUSB_INSTALLED)
+    target_link_libraries(${PROJECT_NAME} usb-1.0)
 else ()
     message(STATUS "Cannot Find LIBUSB")
 endif (LIBUSB_FOUND)
@@ -123,4 +118,11 @@ endif ()
 
 target_link_libraries(${PROJECT_NAME} m)
 
-add_dependencies(${PROJECT_NAME} djisdk)
+add_custom_command(TARGET ${PROJECT_NAME}
+        PRE_LINK COMMAND cmake ..
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
+if (OpenCV_FOUND)
+    target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+endif ()

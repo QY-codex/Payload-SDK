@@ -55,6 +55,7 @@ typedef struct {
     T_DjiHmsFileBinaryArray *fileBinaryArrayList; /*!< Pointer to binary array list */
 } T_DjiHmsBinaryArrayConfig;
 
+
 /* Exported functions --------------------------------------------------------*/
 /**
  * @brief Initialise hms customization module, and user should call this function
@@ -64,7 +65,7 @@ typedef struct {
 T_DjiReturnCode DjiHmsCustomization_Init(void);
 
 /**
- * @brief DeInitialize hms customization module.
+ * @brief DeInitialize hms manager module.
  * @return Execution result.
  */
 T_DjiReturnCode DjiHmsCustomization_DeInit(void);

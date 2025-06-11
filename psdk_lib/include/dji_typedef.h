@@ -45,7 +45,7 @@ extern "C" {
 #define DJI_PI                                  (3.14159265358979323846f)
 #define DJI_FILE_NAME_SIZE_MAX                  256
 #define DJI_FILE_PATH_SIZE_MAX                  (DJI_FILE_NAME_SIZE_MAX + 256)
-#define DJI_IP_ADDR_STR_SIZE_MAX                16
+#define DJI_IP_ADDR_STR_SIZE_MAX                15
 #define DJI_MD5_BUFFER_LEN                      16
 
 #define DJI_SUBSCRIPTION_MODULE_INDEX_OFFSET    24u
@@ -76,7 +76,7 @@ typedef enum {
     DJI_MOUNT_POSITION_TYPE_UNKNOWN             = 0,
     DJI_MOUNT_POSITION_TYPE_PAYLOAD_PORT        = 1,
     DJI_MOUNT_POSITION_TYPE_EXTENSION_PORT      = 2,
-    DJI_MOUNT_POSITION_TYPE_EXTENSION_LITE_PORT = 3,
+    DJI_MOUNT_POSITION_TYPE_EXTENSION_LITE_PORT = 3
 } E_DjiMountPositionType;
 
 typedef enum {
@@ -97,8 +97,6 @@ typedef enum {
     DJI_AIRCRAFT_SERIES_M350                    = 5,
     DJI_AIRCRAFT_SERIES_M3D                     = 6,
     DJI_AIRCRAFT_SERIES_FC30                    = 7,
-    DJI_AIRCRAFT_SERIES_M4                      = 8,
-	DJI_AIRCRAFT_SERIES_M4D                     = 9,
 } E_DjiAircraftSeries;
 
 typedef enum {
@@ -115,10 +113,6 @@ typedef enum {
     DJI_AIRCRAFT_TYPE_M350_RTK                  = 89, /*!< Aircraft type is Matrice 350 RTK. */
     DJI_AIRCRAFT_TYPE_M3D                       = 91, /*!< Aircraft type is Matrice 3D. */
     DJI_AIRCRAFT_TYPE_M3TD                      = 93, /*!< Aircraft type is Matrice 3TD. */
-    DJI_AIRCRAFT_TYPE_M4T                       = 99, /*!< Aircraft type is Mavic 4T. */
-    DJI_AIRCRAFT_TYPE_M4E                       = 990, /*!< Aircraft type is Mavic 4E. */
-    DJI_AIRCRAFT_TYPE_M4TD                      = 100, /*!< Aircraft type is Matrice 4TD. */
-    DJI_AIRCRAFT_TYPE_M4D                       = 1000, /*!< Aircraft type is Matrice 4D. */
 } E_DjiAircraftType;
 
 /**
@@ -142,12 +136,6 @@ typedef enum {
     DJI_CAMERA_TYPE_M3T                         = 67, /*!< Camera type is M3T. */
     DJI_CAMERA_TYPE_M3D                         = 80, /*!< Camera type is Matrice 3D. */
     DJI_CAMERA_TYPE_M3TD                        = 81, /*!< Camera type is Matrice 3TD. */
-    DJI_CAMERA_TYPE_H30                         = 82, /*!< Camera type is H30. */
-    DJI_CAMERA_TYPE_H30T                        = 83, /*!< Camera type is H30T. */
-    DJI_CAMERA_TYPE_M4T                         = 89, /*!< Camera type is M4T. */
-    DJI_CAMERA_TYPE_M4E                         = 891, /*!< Camera type is M4E. */
-    DJI_CAMERA_TYPE_M4TD                        = 90, /*!< Camera type is M4TD. */
-    DJI_CAMERA_TYPE_M4D                         = 91, /*!< Camera type is M4D. */
 } E_DjiCameraType;
 
 /**
@@ -225,8 +213,10 @@ typedef enum {
  */
 typedef enum {
     DJI_MOBILE_APP_SCREEN_TYPE_UNKNOWN          = 255, /*!< Mobile APP screen type is unknown. */
-    DJI_MOBILE_APP_SCREEN_TYPE_BIG_SCREEN       = 0, /*!< Screen size is 6 inches or larger. */
-    DJI_MOBILE_APP_SCREEN_TYPE_LITTLE_SCREEN    = 1, /*!< Screen size is less than 6 inches. */
+    DJI_MOBILE_APP_SCREEN_TYPE_BIG_SCREEN       = 0, /*!< The big screen of mobile device refers to a screen
+                                                                * size greater than or equal to 6 inches. */
+    DJI_MOBILE_APP_SCREEN_TYPE_LITTLE_SCREEN    = 1, /*!< The little screen of mobile device refers to a
+                                                                    * screen size less than 6 inches. */
 } E_DjiMobileAppScreenType;
 
 /**
@@ -276,47 +266,56 @@ typedef enum {
  * @brief Camera focus target point when in focus mode.
  */
 typedef struct {
-    dji_f32_t focusX; /*!< Specifies the horizontal coordinate within the zone. Range: 0 to 1.
-                            The point [0.0, 0.0] represents the top-left corner of the screen.*/
-    dji_f32_t focusY; /*!< Specifies vertical zone coordinate. Range: 0 to 1. */
+    dji_f32_t focusX; /*!< Specifies horizontal zone coordinate. This parameter is between 0 and 1.
+                            The point [0.0, 0.0] represents the top-left angle of the screen.*/
+    dji_f32_t focusY; /*!< Specifies vertical zone coordinate. This parameter is between 0 and 1. */
 } T_DjiCameraPointInScreen;
 
 /**
- * @brief Camera time interval settings for interval shoot-photo mode.
+ * @brief Camera time interval settings when in interval shootPhoto mode.
  */
 typedef struct {
     uint8_t captureCount; /*!< Specifies the total capture count of interval settings.
- *                             0: reserved, 1-254: specific number, 255: continuous capture until stopped. */
+ *                             0:reserve 1~254:number 255:keep capturing till stop */
     uint16_t timeIntervalSeconds; /*!< Specifies the interval time between two captures, unit: s*/
 } T_DjiCameraPhotoTimeIntervalSettings;
 
 /**
- * @brief Camera zoom speeds.
+ * @brief Camera zoom speed.
  */
 typedef enum {
-    DJI_CAMERA_ZOOM_SPEED_SLOWEST               = 72, /*!< Slowest zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_SLOW                  = 73, /*!< Slow zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_MODERATELY_SLOW       = 74, /*!< Slightly slower than normal zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_NORMAL                = 75, /*!< Normal zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_MODERATELY_FAST       = 76, /*!< Slightly faster than normal zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_FAST                  = 77, /*!< Fast zoom speed. */
-    DJI_CAMERA_ZOOM_SPEED_FASTEST               = 78, /*!< Fastest zoom speed. */
+    DJI_CAMERA_ZOOM_SPEED_SLOWEST               = 72, /*!< Lens zooms in slowest speed. */
+    DJI_CAMERA_ZOOM_SPEED_SLOW                  = 73, /*!< Lens zooms in slow speed. */
+    DJI_CAMERA_ZOOM_SPEED_MODERATELY_SLOW       = 74, /*!< Lens zooms in speed slightly slower than normal speed. */
+    DJI_CAMERA_ZOOM_SPEED_NORMAL                = 75, /*!< Lens zooms in normal speed. */
+    DJI_CAMERA_ZOOM_SPEED_MODERATELY_FAST       = 76, /*!< Lens zooms very in speed slightly faster than normal speed. */
+    DJI_CAMERA_ZOOM_SPEED_FAST                  = 77, /*!< Lens zooms very in fast speed. */
+    DJI_CAMERA_ZOOM_SPEED_FASTEST               = 78, /*!< Lens zooms very in fastest speed. */
 } E_DjiCameraZoomSpeed;
 
 typedef enum {
-    /*! The burst mode can capture 2 pictures per trigger. */
+    /*! The number of pictures to continuously take each time in BURST mode is 2
+     */
     DJI_CAMERA_BURST_COUNT_2                    = 2,
-    /*! The burst mode can capture 3 pictures per trigger. */
+    /*! The number of pictures to continuously take each time in BURST mode is 3
+     */
     DJI_CAMERA_BURST_COUNT_3                    = 3,
-    /*! The burst mode can capture 5 pictures per trigger. */
+    /*! The number of pictures to continuously take each time in BURST mode is 5
+     */
     DJI_CAMERA_BURST_COUNT_5                    = 5,
-    /*! The burst mode can capture 7 pictures per trigger. */
+    /*! The number of pictures to continuously take each time in BURST mode is 7
+     */
     DJI_CAMERA_BURST_COUNT_7                    = 7,
-    /*! Supports capturing 10 pictures per trigger, only supported by X4S, X5S cameras, and Phantom 4 Pro. */
+    /*! The number of pictures to continuously take at one time in BURST mode is
+     * 10, Only supported by X4S camera, X5S camera and Phantom 4 Pro camera.
+     */
     DJI_CAMERA_BURST_COUNT_10                   = 10,
-    /*! Supports capturing 14 pictures per trigger, only supported by X4S, X5S cameras, and Phantom 4 Pro. */
+    /*! The number of pictures to continuously take at one time in BURST mode is
+     * 14, Only supported by X4S camera, X5S camera and Phantom 4 Pro camera.
+     */
     DJI_CAMERA_BURST_COUNT_14                   = 14,
-    /*! Unknown burst count. */
+    /*!	The camera burst shoot count value is unknown.
+     */
     DJI_CAMERA_BURST_COUNT_KNOWN                = 0xFF,
 } E_DjiCameraBurstCount;
 
@@ -324,8 +323,8 @@ typedef enum {
  * @brief Camera zoom direction.
  */
 typedef enum {
-    DJI_CAMERA_ZOOM_DIRECTION_OUT               = 0, /*!< Zooms out, reducing the zoom factor. */
-    DJI_CAMERA_ZOOM_DIRECTION_IN                = 1, /*!< Zooms in, increasing the zoom factor. */
+    DJI_CAMERA_ZOOM_DIRECTION_OUT               = 0, /*!< The lens moves in the far direction, the zoom factor becomes smaller. */
+    DJI_CAMERA_ZOOM_DIRECTION_IN                = 1, /*!< The lens moves in the near direction, the zoom factor becomes larger. */
 } E_DjiCameraZoomDirection;
 #pragma pack (1)
 
@@ -353,70 +352,55 @@ typedef struct {
     bool busyState;
 } T_DjiDataChannelState;
 
-/**
- * @brief Represents a vector using int32 coordinates.
- */
-typedef struct Vector3d{
-    int32_t x; /*!< X-coordinate of the vector. */
-    int32_t y; /*!< Y-coordinate of the vector. */
-    int32_t z; /*!< Z-coordinate of the vector. */
+typedef struct Vector3d {
+    int32_t x; /*!< Specifies int32 value of x for vector. */
+    int32_t y; /*!< Specifies int32 value of y for vector. */
+    int32_t z; /*!< Specifies int32 value of z for vector. */
 } T_DjiVector3d;
 
-/**
- * @brief Represents a vector using floating-point coordinates.
- */
-typedef struct Vector3f{
-    dji_f32_t x; /*!< X-coordinate of the vector. */
-    dji_f32_t y; /*!< Y-coordinate of the vector. */
-    dji_f32_t z; /*!< Z-coordinate of the vector. */
+typedef struct Vector3f {
+    dji_f32_t x; /*!< Specifies float value of x for vector. */
+    dji_f32_t y; /*!< Specifies float value of y for vector. */
+    dji_f32_t z; /*!< Specifies float value of z for vector. */
 } T_DjiVector3f;
 
-/**
- * @brief Represents an attitude using int32 values for pitch, roll, and yaw.
- */
 typedef struct {
-    int32_t pitch; /*!< Pitch angle in degrees. */
-    int32_t roll;  /*!< Roll angle in degrees. */
-    int32_t yaw;   /*!< Yaw angle in degrees. */
+    int32_t pitch; /*!< Specifies int32 value of pitch for attitude. */
+    int32_t roll; /*!< Specifies int32 value of roll for attitude */
+    int32_t yaw; /*!< Specifies int32 value of yaw for attitude */
 } T_DjiAttitude3d;
 
-/**
- * @brief Represents an attitude using floating-point values for pitch, roll, and yaw.
- */
 typedef struct {
-    dji_f32_t pitch; /*!< Pitch angle in degrees. */
-    dji_f32_t roll;  /*!< Roll angle in degrees. */
-    dji_f32_t yaw;   /*!< Yaw angle in degrees. */
+    dji_f32_t pitch; /*!< Specifies float value of pitch for attitude. */
+    dji_f32_t roll; /*!< Specifies float value of roll for attitude */
+    dji_f32_t yaw; /*!< Specifies float value of yaw for attitude */
 } T_DjiAttitude3f;
 
-/**
- * @brief Represents a quaternion, when converted to a rotation matrix or Euler angles.
- */
 typedef struct {
-    dji_f32_t q0; /*!< Quaternion component w. */
-    dji_f32_t q1; /*!< Quaternion component x. */
-    dji_f32_t q2; /*!< Quaternion component y. */
-    dji_f32_t q3; /*!< Quaternion component z. */
+    dji_f32_t q0; /*!< w, when converted to a rotation matrix or Euler angles. */
+    dji_f32_t q1; /*!< x, when converted to a rotation matrix or Euler angles. */
+    dji_f32_t q2; /*!< y, when converted to a rotation matrix or Euler angles. */
+    dji_f32_t q3; /*!< z, when converted to a rotation matrix or Euler angles. */
 } T_DjiQuaternion4f;
 
 /**
  * @brief Timestamp data structure.
  */
 typedef struct {
-    uint32_t millisecond;
-    uint32_t microsecond;
+    uint32_t millisecond; /*!< Millisecond. */
+    uint32_t microsecond; /*!< Microsecond. */
 } T_DjiDataTimestamp;
 
 /**
  * @brief The firmware version of payload.
- * @note The firmware version is displayed as AA.BB.CC.DD where AA is majorVersion,
- * BB is minorVersion, CC is modifyVersion, and DD is debugVersion.
+ * @note If majorVersion = AA, minorVersion = BB, modifyVersion = CC, debugVersion = DD, The version show in
+ * terminal APP is AA.BB.CC.DD
  */
 typedef struct {
-    uint8_t majorVersion;   /*!< Major version number, ranging from 0 to 99. */
-    uint8_t minorVersion;   /*!< Minor version number, ranging from 0 to 99. */
-    uint8_t modifyVersion;  /*!< Modification version number, ranging from 0 to 99. */
-    uint8_t debugVersion;   /*!< Debug version number, ranging from 0 to 99. */
+    uint8_t majorVersion; /*!< The major version of firmware, the range is 0 ~ 99. */
+    uint8_t minorVersion; /*!< The minor version of firmware, the range is 0 ~ 99. */
+    uint8_t modifyVersion; /*!< The modify version of firmware, the range is 0 ~ 99. */
+    uint8_t debugVersion; /*!< The debug version of firmware, the range is 0 ~ 99. */
 } T_DjiFirmwareVersion;
 
 #pragma pack ()

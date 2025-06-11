@@ -67,9 +67,10 @@ T_DjiReturnCode HalUart_Init(E_DjiHalUartNum uartNum, uint32_t baudRate, T_DjiUa
         strcpy(uart1Name, linkConfig.uartConfig.uart1DeviceName);
         strcpy(uart2Name, linkConfig.uartConfig.uart2DeviceName);
     } else {
-        strcpy(uart1Name, LINUX_UART_DEV1);
-        strcpy(uart2Name, LINUX_UART_DEV2);
+        strcpy(uart1Name, "/dev/ttyTHS1");
+        strcpy(uart2Name, "/dev/ttyTHS1");
     }
+    // print the uart device name
 
     if (uartNum == DJI_HAL_UART_NUM_0) {
         strcpy(uartName, uart1Name);
@@ -98,7 +99,7 @@ T_DjiReturnCode HalUart_Init(E_DjiHalUartNum uartNum, uint32_t baudRate, T_DjiUa
         goto close_fp;
     }
 #else
-    sprintf(systemCmd, "chmod 777 %s", uartName);
+    sprintf(systemCmd, "sudo chmod 777 %s", uartName);
     fp = popen(systemCmd, "r");
     if (fp == NULL) {
         goto free_uart_handle;

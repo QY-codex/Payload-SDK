@@ -71,7 +71,6 @@ typedef struct {
         uint8_t usbBulk2InterfaceNum;
         uint8_t usbBulk2EndpointIn;
         uint8_t usbBulk2EndpointOut;
-
     } usbBulkConfig;
 } T_DjiUserLinkConfig;
 
